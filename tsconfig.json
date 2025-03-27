@@ -1,0 +1,22 @@
+{
+  "extends": "@quasar/app-vite/tsconfig-preset",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "types": ["quasar", "vue", "vite/client", "node"],
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
+    "jsx": "preserve",
+    "lib": ["esnext", "dom"], // Adiciona suporte para ESNext e DOM
+    "target": "esnext", // Usa as últimas features do JS
+    "module": "esnext", // Suporte a módulos ES6
+    "resolveJsonModule": true, // Para importar arquivos .json
+    "noImplicitAny": false, // Permite o uso do any (opcional)
+    "skipDefaultLibCheck": true // Ignora a checagem das definições de biblioteca padrão
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "exclude": ["node_modules", "dist"]
+}

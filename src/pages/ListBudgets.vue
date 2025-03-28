@@ -144,14 +144,23 @@ const confirmDelete = (id: number) => {
   isDeleteModalOpen.value = true;
 };
 
-const handleDeleteBudget = () => {
+const handleDeleteBudget = async () => {
   if (selectedBudgetId.value !== null) {
-    budgets.value = budgets.value.filter((budget) => budget.id !== selectedBudgetId.value);
-    filteredBudgets.value = filteredBudgets.value.filter((budget) => budget.id !== selectedBudgetId.value);
-    isDeleteModalOpen.value = false;
-    selectedBudgetId.value = null;
+    try {
+      await api.put(`/user/${selectedBudgetId.value}`);
+      budgets.value = budgets.value.filter((budget) => budget.id !== selectedBudgetId.value);
+      filteredBudgets.value = filteredBudgets.value.filter((budget) => budget.id !== selectedBudgetId.value);
+      console.log('Orçamento deletado com sucesso');
+    } catch (error) {
+      console.error('Erro ao deletar orçamento:', error);
+    } finally {
+      isDeleteModalOpen.value = false;
+      selectedBudgetId.value = null;
+    }
   }
 };
+
+
 
 const goToNewBudget = () => {
   router.push('/budgets/new');

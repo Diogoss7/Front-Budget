@@ -22,7 +22,7 @@
 
       <q-card-actions align="right">
         <q-btn class="edit-btn" label="Editar" color="primary" :to="`/edit/${budget.id}`" flat />
-        <q-btn class="whatsapp-btn" label="Enviar WhatsApp" color="green" @click="sendWhatsApp" />
+        <q-btn class="whatsapp-btn" label="Enviar WhatsApp" icon="send" color="green" @click="sendWhatsApp" />
       </q-card-actions>
     </q-card>
   </q-dialog>

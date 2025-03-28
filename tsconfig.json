@@ -10,12 +10,12 @@
     "forceConsistentCasingInFileNames": true,
     "allowJs": true,
     "jsx": "preserve",
-    "lib": ["esnext", "dom"], // Adiciona suporte para ESNext e DOM
-    "target": "esnext", // Usa as últimas features do JS
-    "module": "esnext", // Suporte a módulos ES6
-    "resolveJsonModule": true, // Para importar arquivos .json
-    "noImplicitAny": false, // Permite o uso do any (opcional)
-    "skipDefaultLibCheck": true // Ignora a checagem das definições de biblioteca padrão
+    "lib": ["esnext", "dom"],
+    "target": "esnext",
+    "module": "esnext",
+    "resolveJsonModule": true,
+    "noImplicitAny": false,
+    "skipDefaultLibCheck": true
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "exclude": ["node_modules", "dist"]

@@ -40,8 +40,15 @@
                 <q-item-section avatar class="small-icon">
                   <q-icon name="event" color="primary" size="1rem" />
                 </q-item-section>
-                <q-item-section class="text-content">{{ budget.date }}</q-item-section>
+                <q-item-section class="text-content">
+                  {{ new Date(budget.date).toLocaleDateString('pt-BR', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                  }) }}
+                </q-item-section>
               </q-item>
+
               <q-item>
                 <q-item-section avatar class="small-icon">
                   <q-icon name="schedule" color="primary" size="1rem" />
@@ -67,7 +74,9 @@
 
     <div v-else class="text-center q-pa-md">
       <div v-if="searchTerm">
-        <p class="text-grey-7 q-mb-md">Nenhum orçamento encontrado para "{{ searchTerm }}"</p>
+        <p class="text-grey-7 q-mb-md">
+          Nenhum orçamento encontrado para "{{ searchTerm }}"
+        </p>
         <q-btn outline label="Limpar busca" @click="searchTerm = ''" />
       </div>
       <div v-else>
@@ -126,7 +135,6 @@ const selectedBudgetId = ref<number | null>(null);
 const isBudgetModalOpen = ref(false);
 const selectedBudget = ref<Budget | null>(null);
 
-
 const fetchBudgets = async () => {
   try {
     const response = await api.get('/users');
@@ -148,8 +156,12 @@ const handleDeleteBudget = async () => {
   if (selectedBudgetId.value !== null) {
     try {
       await api.put(`/user/${selectedBudgetId.value}`);
-      budgets.value = budgets.value.filter((budget) => budget.id !== selectedBudgetId.value);
-      filteredBudgets.value = filteredBudgets.value.filter((budget) => budget.id !== selectedBudgetId.value);
+      budgets.value = budgets.value.filter(
+        (budget) => budget.id !== selectedBudgetId.value
+      );
+      filteredBudgets.value = filteredBudgets.value.filter(
+        (budget) => budget.id !== selectedBudgetId.value
+      );
       console.log('Orçamento deletado com sucesso');
     } catch (error) {
       console.error('Erro ao deletar orçamento:', error);
@@ -160,8 +172,6 @@ const handleDeleteBudget = async () => {
   }
 };
 
-
-
 const goToNewBudget = () => {
   router.push('/budgets/new');
 };
@@ -171,6 +181,20 @@ const openBudgetModal = (budget: Budget) => {
   isBudgetModalOpen.value = true;
 };
 
+const formatBudgetField = (field: string | number | Date): string => {
+  if (typeof field === 'number') {
+    return field.toString();
+  }
+  if (field instanceof Date) {
+    return field.toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+  }
+  return field.toString().toLowerCase().trim();
+};
+
 watch(searchTerm, (term) => {
   if (term.trim() === '') {
     filteredBudgets.value = budgets.value;
@@ -178,12 +202,15 @@ watch(searchTerm, (term) => {
   }
 
   const lowerTerm = term.toLowerCase().trim();
-  filteredBudgets.value = budgets.value.filter(
-    (budget) =>
-      budget.client.toLowerCase().includes(lowerTerm) ||
-      budget.salesperson.toLowerCase().includes(lowerTerm) ||
-      budget.amount.toString().includes(lowerTerm)
-  );
+  filteredBudgets.value = budgets.value.filter((budget) => {
+    return (
+      formatBudgetField(budget.client).includes(lowerTerm) ||
+      formatBudgetField(budget.salesperson).includes(lowerTerm) ||
+      formatBudgetField(budget.amount).includes(lowerTerm) ||
+      formatBudgetField(budget.description).includes(lowerTerm) ||
+      formatBudgetField(new Date(budget.date)).includes(lowerTerm)
+    );
+  });
 });
 
 onMounted(() => {

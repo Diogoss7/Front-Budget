@@ -11,7 +11,11 @@
         <p class="text-body1 text-grey-8">Vendedor: {{ budget.salesperson }}</p>
         <p class="text-body1 text-grey-8">Telefone: {{ budget.phone }}</p>
         <p class="text-body1 text-grey-8">Valor: <strong>R$ {{ budget.amount }}</strong></p>
-        <p class="text-body1 text-grey-8">Data: {{ formattedDate }}</p>
+        <p class="text-body1 text-grey-8">Data: {{ new Date(props.budget.date).toLocaleDateString('pt-BR', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+        }) }}</p>
         <p class="text-body1 text-grey-8">Hora: {{ budget.time }}</p>
         <q-separator class="q-my-md" />
         <strong>Descrição:</strong>
@@ -61,7 +65,11 @@ watch(show, (newVal) => {
 
 const formattedDate = computed(() => {
   const date = new Date(props.budget.date);
-  return date.toLocaleDateString('pt-BR');
+  return date.toLocaleDateString('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  });
 });
 
 const sendWhatsApp = () => {

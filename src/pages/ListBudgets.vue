@@ -181,20 +181,6 @@ const openBudgetModal = (budget: Budget) => {
   isBudgetModalOpen.value = true;
 };
 
-const formatBudgetField = (field: string | number | Date): string => {
-  if (typeof field === 'number') {
-    return field.toString();
-  }
-  if (field instanceof Date) {
-    return field.toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    });
-  }
-  return field.toString().toLowerCase().trim();
-};
-
 watch(searchTerm, (term) => {
   if (term.trim() === '') {
     filteredBudgets.value = budgets.value;
@@ -203,12 +189,17 @@ watch(searchTerm, (term) => {
 
   const lowerTerm = term.toLowerCase().trim();
   filteredBudgets.value = budgets.value.filter((budget) => {
+    const formattedDate = new Date(budget.date).toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
     return (
-      formatBudgetField(budget.client).includes(lowerTerm) ||
-      formatBudgetField(budget.salesperson).includes(lowerTerm) ||
-      formatBudgetField(budget.amount).includes(lowerTerm) ||
-      formatBudgetField(budget.description).includes(lowerTerm) ||
-      formatBudgetField(new Date(budget.date)).includes(lowerTerm)
+      budget.client.toLowerCase().includes(lowerTerm) ||
+      budget.salesperson.toLowerCase().includes(lowerTerm) ||
+      budget.amount.toString().includes(lowerTerm) ||
+      budget.description.toLowerCase().includes(lowerTerm) ||
+      formattedDate.includes(lowerTerm)
     );
   });
 });

@@ -1,6 +1,6 @@
 <template>
-  <q-dialog class="modal-card" v-model="show">
-    <q-card>
+  <q-dialog v-model="show">
+    <q-card class="modal-card">
       <q-card-section class="row items-center justify-between">
         <div class="text-h6">Detalhes do Orçamento</div>
         <q-btn flat icon="close" color="negative" v-close-popup />
@@ -85,6 +85,8 @@ const sendWhatsApp = () => {
   width: 100%;
   max-width: 90%;
   max-height: 80%;
+  padding: 2%;
+  border-radius: 10px;
 }
 
 .content-description {
@@ -92,6 +94,7 @@ const sendWhatsApp = () => {
   flex-direction: column;
   width: 100%;
   height: 150px;
+  padding: 10px;
   overflow-y: auto;
   overflow-wrap: break-word;
   word-wrap: break-word;

@@ -6,7 +6,8 @@
         <div class="form-columns">
           <q-input class="google-input" filled v-model="formData.client" label="Cliente" required />
           <q-input class="google-input" filled v-model="formData.salesperson" label="Vendedor" required />
-          <q-input class="google-input" filled v-model="formData.phone" label="Telefone" type="tel" required />
+          <q-input class="google-input" filled v-model="formData.phone" label="Telefone" type="tel" required
+            v-mask="['(##) #####-####']" />
         </div>
         <div class="form-columns">
           <q-input class="google-input" filled v-model="formData.date" label="Data" type="date" required />
@@ -30,6 +31,8 @@ import { ref } from 'vue';
 import api from 'src/services/api';
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
+import { useRouter as vueUseRouter } from 'vue-router';
+const router = useRouter();
 
 const initialData = {
   client: '',
@@ -50,11 +53,10 @@ const handleSubmit = async () => {
 
     if (response.data) {
       toast.success('Orçamento salvo com sucesso!', {
-        autoClose: 2000,
         position: 'top-right',
         icon: '✔️',
       });
-      clearForm();
+      returnToBudgets();
     } else {
       throw new Error('Erro ao salvar o orçamento');
     }
@@ -66,10 +68,14 @@ const handleSubmit = async () => {
     });
   }
 };
-
-const clearForm = () => {
-  Object.assign(formData.value, initialData);
-};
+function returnToBudgets() {
+  setTimeout(() => {
+    router.push('/budgets');
+  }, 2000);
+}
+function useRouter() {
+  return vueUseRouter();
+}
 </script>
 
 <style scoped>

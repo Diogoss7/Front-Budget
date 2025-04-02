@@ -1,15 +1,11 @@
 {
   "version": 2,
+  "public": "dist/spa",
   "builds": [
     {
       "src": "dist/spa/**",
       "use": "@vercel/static"
     }
   ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ]
+  "routes": [{ "src": "/(.*)", "dest": "/index.html" }]
 }

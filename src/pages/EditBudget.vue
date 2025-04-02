@@ -52,7 +52,7 @@ const fetchBudget = async () => {
 
     console.log('Fetching budget with ID:', id);
 
-    const response = await api.get(`/users/${id}`);
+    const response = await api.get(`/client/${id}`);
     console.log('API Response:', response.data);
 
     if (response.data && response.data.user) {

@@ -137,8 +137,8 @@ const selectedBudget = ref<Budget | null>(null);
 
 const fetchBudgets = async () => {
   try {
-    const response = await api.get('/users');
-    budgets.value = Array.isArray(response.data.users) ? response.data.users : [];
+    const response = await api.get('/clients');
+    budgets.value = Array.isArray(response.data.clients) ? response.data.clients : [];
     filteredBudgets.value = budgets.value;
   } catch (error) {
     console.error('Erro ao buscar os dados:', error);
@@ -155,7 +155,7 @@ const confirmDelete = (id: number) => {
 const handleDeleteBudget = async () => {
   if (selectedBudgetId.value !== null) {
     try {
-      await api.put(`/user/${selectedBudgetId.value}`);
+      await api.put(`/client/${selectedBudgetId.value}`);
       budgets.value = budgets.value.filter(
         (budget) => budget.id !== selectedBudgetId.value
       );

@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "public": "dist/spa",
   "builds": [
     {
-      "src": "dist/spa/**",
-      "use": "@vercel/static"
+      "src": "quasar.config.js",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "dist/spa" }
     }
   ],
   "routes": [{ "src": "/(.*)", "dest": "/index.html" }]

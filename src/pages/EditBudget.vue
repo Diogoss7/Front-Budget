@@ -84,6 +84,10 @@ const handleSubmit = async () => {
     const { id } = route.params;
     if (!id) return;
 
+    // Formatar o campo time para H:I
+    const [hours, minutes] = formData.value.time.split(':');
+    formData.value.time = `${hours}:${minutes}`;
+
     const payload = { ...formData.value, amount: parseFloat(String(formData.value.amount)) || 0 };
 
     const response = await api.put(`/update/${id}`, payload);

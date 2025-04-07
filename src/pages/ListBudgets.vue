@@ -155,7 +155,7 @@ const confirmDelete = (id: number) => {
 const handleDeleteBudget = async () => {
   if (selectedBudgetId.value !== null) {
     try {
-      await api.put(`/client/${selectedBudgetId.value}`);
+      await api.delete(`/client/${selectedBudgetId.value}`);
       budgets.value = budgets.value.filter(
         (budget) => budget.id !== selectedBudgetId.value
       );
